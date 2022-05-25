@@ -3,6 +3,7 @@ let age;
 let gender;
 let link;
 
+// loading the models
 Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
     faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
@@ -10,9 +11,15 @@ Promise.all([
     faceapi.nets.ageGenderNet.loadFromUri('/models')
 ]).then(start)
 
+//function for face recognition
 function start() {
     console.log("loaded");
     image.addEventListener('change', async() => {
+
+        // loading upload bar atfirst
+        upload();
+
+        // using face-api.min.js libraray functions to find age and gender
         const input = await faceapi.bufferToImage(image.files[0])
         const detections = await faceapi.detectAllFaces(input, new faceapi.TinyFaceDetectorOptions()).withAgeAndGender()
 
@@ -24,6 +31,8 @@ function start() {
             age = "none";
             gender = "none";
         }
+
+        // classifying the age and gender to generate the consecutive link
         switch (gender) {
             case "none":
                 link = "https://perfect-frame.herokuapp.com/#/?q=notDetected";
@@ -51,7 +60,8 @@ function start() {
             default:
                 console.log("in default");
         }
-        console.log(link);
+
+        // setting the action on submitting the form and enabling the button after the image is uploaded
         const form = document.querySelector("#submit");
         form.action = link;
         const btn = document.querySelector("#now");
@@ -60,4 +70,9 @@ function start() {
             btn.removeAttribute('disabled');
         }
     })
+}
+
+const upload = () => {
+    const progress = document.querySelector(".progress");
+    progress.setAttribute('id', 'play-animation')
 }
