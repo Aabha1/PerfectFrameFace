@@ -36,7 +36,7 @@ It opens and works.
 
 ## For input images
 
-A folder named "sample pictures" is provided. This contains pictures for all the seven categories which i have didvided the people in. You can use any other image.
+A folder named "sample pictures" is provided. This contains pictures for all the seven categories which I have divided the people into. You can use any other image.
 
 ## Details
 
